@@ -42,3 +42,10 @@ db["test"].find().count()
 
 ### Tools
 + pm2
+
+### QA
++ shell order
+
++ kill all job, still need killall python
+
++ pm2
