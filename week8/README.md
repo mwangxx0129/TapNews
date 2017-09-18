@@ -8,6 +8,10 @@ sudo sh news_pipeline_launcher.sh
 
 ### open 4 terminals
 ```
+service redis_6379 start
+
+service mongod start
+
 /week8-codelab2/web-server/server$ npm start
 
 /week8-codelab2/backend_server$ python service.py
@@ -26,6 +30,7 @@ killall python
 ## Notes
 ### mongo
 ```
+
 mongo
 
 show dbs
