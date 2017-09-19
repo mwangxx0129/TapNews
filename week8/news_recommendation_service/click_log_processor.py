@@ -37,7 +37,8 @@ LOG_CLICKS_TASK_QUEUE_URL = "amqp://hwobvzoo:bRJDd0L2vyglauta1fFbsGjfcwyAmVWa@do
 LOG_CLICKS_TASK_QUEUE_NAME = "tap-news-log-clicks-task-queue"
 
 PREFERENCE_MODEL_TABLE_NAME = "user_preference_model"
-NEWS_TABLE_NAME = "news"
+# NEWS_TABLE_NAME = "news"
+NEWS_TABLE_NAME = "news-test"
 
 cloudAMQP_client = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)
 
