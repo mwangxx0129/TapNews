@@ -1,4 +1,4 @@
 {
-  "mongoDbUri": "mongodb://test:test@ds058579.mlab.com:58579/cs503",
+  "mongoDbUri": "localhost:27017/tap-news",
   "jwtSecret": "random string!!"
 }

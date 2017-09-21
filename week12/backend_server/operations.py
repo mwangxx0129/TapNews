@@ -42,7 +42,8 @@ def getNewsSummariesForUser(user_id, page_num):
 
     # The final list of news to be returned.
     sliced_news = []
-
+    print 'getNewsSummariesForUser'
+    
     if redis_client.get(user_id) is not None:
         news_digests = pickle.loads(redis_client.get(user_id))
 
@@ -81,12 +82,47 @@ def getNewsSummariesForUser(user_id, page_num):
 
 
 def logNewsClickForUser(user_id, news_id):
+    print '[logNewsClickForUser]\n'
+    # print 'user_id ', user_id
+    # print 'news_id', news_id
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': datetime.utcnow()}
 
     db = mongodb_client.get_db()
+    # save all log
     db[CLICK_LOGS_TABLE_NAME].insert(message)
+    
+    # save daily log
+    day_click_logs_table_name = CLICK_LOGS_TABLE_NAME + datetime.today().strftime('_%Y-%m-%d')
+    print 'table: ' + day_click_logs_table_name
+    db[day_click_logs_table_name].insert(message)
+
+    # update user freq
+    userFreq(user_id)
+
+    # update item freq
+    newsFreq(news_id)
 
     # Send log task to machine learning service for prediction
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': str(datetime.utcnow())}
     cloudAMQP_client.send_message(message)
-    
+
+def userFreq(user_id):
+    # hashtable
+    print '[userFreq]'
+    key = user_id + '_freq'
+    if redis_client.get(key) is None:
+        count = 0
+    else:
+        count = int(redis_client.get(key))
+    print '[userFreq]', key, count + 1
+    redis_client.set(key, count + 1)
+
+def newsFreq(news_id):
+    print '[NewsFreq]'
+    key = news_id + '_freq'
+    if redis_client.get(key) is None:
+        count = 0
+    else:
+        count = int(redis_client.get(key))
+    print '[newsFreq]', key, count + 1
+    redis_client.set(key, count + 1)
