@@ -33,6 +33,9 @@ NEWS_SOURCES = [
     'the-washington-post'
 ]
 
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', ''))
+from logger.log import LOGGING_NEWS_MONITOR
+
 redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT)
 cloudAMQP_client = CloudAMQPClient(SCRAPE_NEWS_TASK_QUEUE_URL, SCRAPE_NEWS_TASK_QUEUE_NAME)
 
@@ -55,6 +58,7 @@ while True:
             redis_client.expire(news_digest, NEWS_TIME_OUT_IN_SECONDS)
 
             cloudAMQP_client.send_message(news)
+            LOGGING_NEWS_MONITOR.info('[x] Sent message to %s' % (news['title']))
 
     print "Fetched %d news." % num_of_news_news
 

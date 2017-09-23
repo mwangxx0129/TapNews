@@ -23,6 +23,10 @@ NEWS_TABLE_NAME = config['news_deduper']['NEWS_TABLE_NAME']
 SLEEP_TIME_IN_SECONDS = config['news_deduper']['SLEEP_TIME_IN_SECONDS']
 SAME_NEWS_SIMILARITY_THRESHOLD = config['news_deduper']['SAME_NEWS_SIMILARITY_THRESHOLD']
 
+# log
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', ''))
+from logger.log import LOGGING_NEWS_DEDUPER
+
 cloudAMQP_client = CloudAMQPClient(DEDUPE_NEWS_TASK_QUEUE_URL, DEDUPE_NEWS_TASK_QUEUE_NAME)
 
 def handle_message(msg):
@@ -66,6 +70,7 @@ def handle_message(msg):
         task['class'] = topic
 
     db[NEWS_TABLE_NAME].replace_one({'digest': task['digest']}, task, upsert=True)
+    LOGGING_NEWS_DEDUPER.info('[x] Insert %s into MongoDB' % (task['title']))
     # print('got message! after insert')
 
 while True:

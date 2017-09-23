@@ -37,7 +37,7 @@ def getNewsFromSource(sources=DEFAULT_SOURCES, sort_by=SORT_BY_TOP):
 
         response = requests.get(build_url(), params=payload)
 
-        print response.content
+        # print response.content
         res_json = loads(response.content)
 
         # Extract info from response

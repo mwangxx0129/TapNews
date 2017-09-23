@@ -19,6 +19,10 @@ DEDUPE_NEWS_TASK_QUEUE_URL = config['news_fetcher']['DEDUPE_NEWS_TASK_QUEUE_URL'
 DEDUPE_NEWS_TASK_QUEUE_NAME = config['news_fetcher']['DEDUPE_NEWS_TASK_QUEUE_NAME']
 SLEEP_TIME_IN_SECONDS = config['news_fetcher']['SLEEP_TIME_IN_SECONDS']
 
+# log
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', ''))
+from logger.log import LOGGING_NEWS_FETCHER
+
 dedupe_news_queue_client = CloudAMQPClient(DEDUPE_NEWS_TASK_QUEUE_URL, DEDUPE_NEWS_TASK_QUEUE_NAME)
 scrape_news_queue_client = CloudAMQPClient(SCRAPE_NEWS_TASK_QUEUE_URL, SCRAPE_NEWS_TASK_QUEUE_NAME)
 
@@ -35,7 +39,7 @@ def handle_message(msg):
     article.parse()
 
     task['text'] = article.text.encode('utf-8')
-
+    LOGGING_NEWS_FETCHER.info('[x] Fetcher message to %s' % (msg['title']))
     dedupe_news_queue_client.send_message(task)
 
 while True:
