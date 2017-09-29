@@ -20,7 +20,7 @@ def getMember(name):
 
 @app.route("/active_user/")
 def get_hour_clicking_number():
-    return get_hour_clicking_number()
+    return operations.get_hour_clicking_number()
 
 if __name__ == "__main__":
     app.run()
