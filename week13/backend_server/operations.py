@@ -96,6 +96,9 @@ def logNewsClickForUser(user_id, news_id):
     print 'table: ' + day_click_logs_table_name
     db[day_click_logs_table_name].insert(message)
 
+    # count clickinng number evey hour
+    clicking_number_per_hour()
+
     # update user freq
     userFreq(user_id)
 
@@ -106,23 +109,54 @@ def logNewsClickForUser(user_id, news_id):
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': str(datetime.utcnow())}
     cloudAMQP_client.send_message(message)
 
-def userFreq(user_id):
-    # hashtable
-    print '[userFreq]'
-    key = user_id + '_freq'
-    if redis_client.get(key) is None:
-        count = 0
-    else:
-        count = int(redis_client.get(key))
-    print '[userFreq]', key, count + 1
-    redis_client.set(key, count + 1)
+DEFAULT_DAY_FORMAT = '%Y-%m-%d' + '_'
+DEFAULT_HOUR_FORMAT = '%Y-%m-%d-%H' + '_'
+DEFAULT_EXPIRE_SECONDS = 60 * 60
 
-def newsFreq(news_id):
-    print '[NewsFreq]'
-    key = news_id + '_freq'
+HOUR_CLICKING_NUMBER = 'hour_clicking_number' + '_'
+
+DAILY_ACTIVE_USERS = 'daily_active_users' + '_'
+DAILY_ACTIVE_USERS_FREQ = 'daily_active_users_freq' + '_'
+DAILY_ACTIVE_NEWS_FREQ = 'daily_active_news_freq' + '_'
+
+
+
+def addOne(key, expire_seconds=DEFAULT_EXPIRE_SECONDS):
+    '''
+    common add one on given key
+    '''
+
     if redis_client.get(key) is None:
         count = 0
     else:
         count = int(redis_client.get(key))
-    print '[newsFreq]', key, count + 1
     redis_client.set(key, count + 1)
+    redis_client.expire(key, expire_seconds)
+    print 'key: ' + key + '\tval: ' + count + 1
+
+def update_hour_clicking_number():
+    '''
+    total clicking number per hour
+    '''
+    hour = datetime.today().strftime(DEFAULT_HOUR_FORMAT)
+    key = CLICKING_NUMBER_PER_HOUR + hour
+    addOne(key)
+    
+
+def update_daily_active_users_freq(user_id):
+    print 'update_daily_active_users_freq'
+    day = datetime.today().strftime(DEFAULT_DAY_FORMAT)
+    key = DAILY_ACTIVE_USERS_FREQ + day + user_id
+    addOne(key)
+
+def update_daily_active_news_freq(news_id):
+    print 'update_daily_active_news_freq'
+    day = datetime.today().strftime(DEFAULT_DAY_FORMAT)
+    key = DAILY_ACTIVE_NEWS_FREQ + day + news_id
+    addOne(key)
+
+def update_daily_active_users(user_id):
+    print 'update_daily_active_users'
+    day = datetime.today().strftime(DEFAULT_DAY_FORMAT)
+    key = DAILY_ACTIVE_USERS_FREQ + day + user_id
+    if redis_client.get(key) is None:
