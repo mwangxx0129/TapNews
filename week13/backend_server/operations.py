@@ -97,13 +97,13 @@ def logNewsClickForUser(user_id, news_id):
     db[day_click_logs_table_name].insert(message)
 
     # count clickinng number evey hour
-    clicking_number_per_hour()
+    update_hour_clicking_number()
 
     # update user freq
-    userFreq(user_id)
+    update_daily_active_users_freq(user_id)
 
     # update item freq
-    newsFreq(news_id)
+    update_daily_active_news_freq(news_id)
 
     # Send log task to machine learning service for prediction
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': str(datetime.utcnow())}
@@ -132,14 +132,14 @@ def addOne(key, expire_seconds=DEFAULT_EXPIRE_SECONDS):
         count = int(redis_client.get(key))
     redis_client.set(key, count + 1)
     redis_client.expire(key, expire_seconds)
-    print 'key: ' + key + '\tval: ' + count + 1
+    # print 'key: ' + key + '\tval: ' + count + 1
 
 def update_hour_clicking_number():
     '''
     total clicking number per hour
     '''
     hour = datetime.today().strftime(DEFAULT_HOUR_FORMAT)
-    key = CLICKING_NUMBER_PER_HOUR + hour
+    key = HOUR_CLICKING_NUMBER + hour
     addOne(key)
     
 
@@ -153,10 +153,17 @@ def update_daily_active_news_freq(news_id):
     print 'update_daily_active_news_freq'
     day = datetime.today().strftime(DEFAULT_DAY_FORMAT)
     key = DAILY_ACTIVE_NEWS_FREQ + day + news_id
-    addOne(key)
+    addOne(key, 60 * 60 * 24)
 
 def update_daily_active_users(user_id):
     print 'update_daily_active_users'
     day = datetime.today().strftime(DEFAULT_DAY_FORMAT)
-    key = DAILY_ACTIVE_USERS_FREQ + day + user_id
-    if redis_client.get(key) is None:
+
+    # daily_active_users_frq 
+    daily_active_users_frq = DAILY_ACTIVE_USERS_FREQ + day + user_id
+    
+    key = DAILY_ACTIVE_USERS + day
+
+    # if user_id is not in active 
+    if redis_client.get(daily_active_users_frq) is None:
+        addOne(key)

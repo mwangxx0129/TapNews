@@ -38,9 +38,33 @@ Redis: <[2017_09_25_category_technology, int>
  
 
 6. Total device num in certain device
-Redis: <[2017_09_25_device_categories_num, int>
-<device_categories_num, int>
+Redis: <device_categories_num_2017_09, int>
+<"", int>
 Get info from user agent
 
 7.total user number
 total_user_num
+
+
+# View of Visualization
+
+1. 
+
+## data
+set hour_clicking_number_2017-09-29-08_ 200
+set hour_clicking_number_2017-09-29-09_ 500
+set hour_clicking_number_2017-09-29-10_ 200
+set hour_clicking_number_2017-09-29-11_ 600
+set hour_clicking_number_2017-09-29-12_ 1000
+set hour_clicking_number_2017-09-29-13_ 800
+
+set hour_clicking_number_2017-09-29-14_ 200
+set hour_clicking_number_2017-09-29-15_ 100
+set hour_clicking_number_2017-09-29-16_ 600
+
+
+
+## Ref
+https://stackoverflow.com/questions/37980655/why-is-python-datetime-time-delta-not-found
+
+https://stackoverflow.com/questions/3895434/how-to-get-information-about-the-client-in-node-js
