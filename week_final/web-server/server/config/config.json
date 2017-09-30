@@ -1,0 +1,4 @@
+{
+  "mongoDbUri": "localhost:27017/tap-news",
+  "jwtSecret": "random string!!"
+}

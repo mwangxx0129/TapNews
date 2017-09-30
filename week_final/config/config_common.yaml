@@ -1,0 +1,20 @@
+mongodb_client:
+    MONGO_DB_HOST : 'localhost'
+    MONGO_DB_PORT : '27017'
+    DB_NAME : 'tap-news'
+
+news_api_client:
+    NEWS_API_ENDPOINT : 'https://newsapi.org/v1/'
+    NEWS_API_KEY : 'c6782a51efc748129f5a47e273fe9aac'
+    ARTICLES_API : 'articles' 
+    SORT_BY_TOP : 'top'
+    DEFAULT_SOURCES : 
+        - 'bbc-news'
+        - 'cnn'
+
+news_recommendation_service_client:
+    URL : 'http://localhost:5050/'
+
+news_topic_modeling_service_client:
+    URL : 'http://localhost:6060/'
+    
