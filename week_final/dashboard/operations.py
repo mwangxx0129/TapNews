@@ -107,3 +107,6 @@ devices = [
 
 def get_device(device):
     return getValue(device.lower())
+
+def get_news_category(news_category):
+    return getValue(news_category.lower())

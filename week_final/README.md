@@ -36,7 +36,7 @@
 - [x] {"IOS" : 200, "IPHONE" : 300, "Others" : 100}
 
 ### User News Category
-- [ ] {"technology" : 50, "music" : 150, "others" : 50}
+- [x] {"technology" : 50, "music" : 150, "others" : 50}
 
 ### User Active Time distribution (24 hours)
 - [x] {"00" : 20, "01": 30, ... "23" : 40}

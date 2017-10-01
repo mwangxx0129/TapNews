@@ -130,23 +130,23 @@ def newsCategory():
     data = [
         {
             'name': 'technology',
-            'y': 50
+            'y': operations.get_news_category('technology')
         },
         {
-            'name': 'music',
-            'y': 150
+            'name': 'world',
+            'y': operations.get_news_category('world')
         },
         {
             'name': 'education',
-            'y': 30
+            'y': operations.get_news_category('education')
         },
         {
             'name': 'sports',
-            'y': 50
+            'y': operations.get_news_category('sports')
         },
         {
             'name': 'weather',
-            'y': 50
+            'y': operations.get_news_category('weather')
         },
     ]
     response = app.response_class(

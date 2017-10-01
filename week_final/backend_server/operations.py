@@ -234,4 +234,4 @@ classes = [
 
 def update_news_category(news_category):
     print "news_category:%s", news_category
-    addOne(news_category)
+    addOne(news_category.lower())
