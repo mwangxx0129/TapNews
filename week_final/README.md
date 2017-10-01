@@ -1,8 +1,8 @@
 # week final
 ## 1. API
 ### User Statistics Data
-- [ ] Total Users {"total users" : 1000}
-- [o] New Users (Today) {"dailyNewUsers" : 30}
+- [x] Total Users {"total users" : 1000}
+- [ ] New Users (Today) {"dailyNewUsers" : 30}
 - [x] Active Users (Today) {"dailyActiveUsers" : 200}
 - [ ] Average Usage Time
 
