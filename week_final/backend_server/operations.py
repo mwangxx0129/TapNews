@@ -105,6 +105,9 @@ def logNewsClickForUser(user_id, news_id):
     # update item freq
     update_daily_active_news_freq(news_id)
 
+    # update_daily_active_users
+    update_daily_active_users(user_id)
+
     # Send log task to machine learning service for prediction
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': str(datetime.utcnow())}
     cloudAMQP_client.send_message(message)
@@ -140,6 +143,7 @@ def update_hour_clicking_number():
     '''
     hour = datetime.today().strftime(DEFAULT_HOUR_FORMAT)
     key = HOUR_CLICKING_NUMBER + hour
+    print key
     addOne(key)
     
 
