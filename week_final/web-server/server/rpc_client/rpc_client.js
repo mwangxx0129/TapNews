@@ -25,11 +25,12 @@ function getNewsSummariesForUser(user_id, page_num, callback) {
 }
 
 // Log a news click event for a user
-function logNewsClickForUser(user_id, news_id) {
-  client.request('logNewsClickForUser', [user_id, news_id], function(err, error, response) {
-    console.log('rpc_client/logNewsClickForUser');
+function logNewsClickForUser(user_id, news_id, user_agent, news_category) {
+  client.request('logNewsClickForUser', [user_id, news_id, user_agent, news_category], function(err, error, response) {
+    console.log('==========rpc_client/logNewsClickForUser=================');
+    console.log('user_id: %s\n news_id: %s\n user_agent: %s\n news_category: %s\n', user_id , news_id, user_agent, news_category);
     if (err) throw err;
-    console.log(response);
+    // console.log(response);
   });
 }
 

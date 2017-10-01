@@ -22,7 +22,7 @@ DAILY_ACTIVE_USERS = 'daily_active_users' + '_'
 DAILY_ACTIVE_USERS_FREQ = 'daily_active_users_freq' + '_'
 DAILY_ACTIVE_NEWS_FREQ = 'daily_active_news_freq' + '_'
 
-def fakeData(time_delta, val):
+def generate_hour_clicking_number(time_delta, val):
     lastHourDateTime = datetime.today() - timedelta(hours = time_delta)
 
     # format %Y-%m-%d-%H
@@ -35,5 +35,18 @@ def fakeData(time_delta, val):
     if redis_client.get(key) is not None:
         redis_client.set(key, val)
 
-for i in range(23):
-    fakeData(i, (i * 99) % 1024)
+def generate_daily_active_users(time_delta, val):
+    lastDayDateTime = datetime.today() - timedelta(days = time_delta)
+
+    day = lastDayDateTime.strftime(DEFAULT_DAY_FORMAT)
+    key = DAILY_ACTIVE_USERS + day
+
+    print key
+    if redis_client.get(key) is None:
+        redis_client.set(key, val)
+
+for i in range(7):
+    generate_daily_active_users(i, (i * 99) % 1024)
+
+# for i in range(23):
+#     generate_hour_clicking_number(i, (i * 99) % 1024)

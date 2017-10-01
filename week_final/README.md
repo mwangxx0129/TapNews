@@ -33,7 +33,7 @@
 ```
 
 ### User Device
-- [ ] {"IOS" : 200, "IPHONE" : 300, "Others" : 100}
+- [x] {"IOS" : 200, "IPHONE" : 300, "Others" : 100}
 
 ### User News Category
 - [ ] {"technology" : 50, "music" : 150, "others" : 50}
@@ -50,3 +50,9 @@ backend_rpc
 operations
 
 
+
+
+## QA
+#!/bin/bash
+fuser -k 3000/tcp
+fuser -k 5000/tcp

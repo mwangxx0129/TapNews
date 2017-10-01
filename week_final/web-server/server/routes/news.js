@@ -15,12 +15,14 @@ router.get('/userId/:userId/pageNum/:pageNum', function(req, res, next) {
 });
 
 /* Log news click. */
-router.post('/userId/:userId/newsId/:newsId', function(req,res, next) {
+router.post('/userId/:userId/newsId/:newsId/newsCategory/:newsCategory', function(req,res, next) {
   console.log('Logging news click...');
   user_id = req.params['userId'];
   news_id = req.params['newsId'];
+  user_agent = req.headers['user-agent'];
+  news_category = req.params['newsCategory'];
 
-  rpc_client.logNewsClickForUser(user_id, news_id);
+  rpc_client.logNewsClickForUser(user_id, news_id, user_agent, news_category);
   res.status(200);
 });
 

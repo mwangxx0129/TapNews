@@ -12,8 +12,8 @@ cd ../backend_server
 python service.py&
 
 cd ../web-server/client
-# npm install
-# npm run build&
+npm install
+npm run build&
 
 cd ../server
 npm install

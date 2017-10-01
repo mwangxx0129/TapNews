@@ -67,21 +67,9 @@ def get_hour_clicking_number(time_delta=0):
     # get key
     key = HOUR_CLICKING_NUMBER + hour
 
-    print key
-    if redis_client.get(key) is None:
-        count = 0
-    else:
-        count = redis_client.get(key)
-    return count
+    return getValue(key)
 
 def get_daily_active_time():
-    '''
-    [
-        "200",
-        "300",
-        "200"
-    ]
-    '''
     res = []
     # get current hour
     curHour = datetime.today().hour
@@ -91,6 +79,31 @@ def get_daily_active_time():
     
     return res
 
+def get_daily_active_users(time_delta=0):
+    # get previous hour time
+    # hour = datetime.today().strftime(DEFAULT_HOUR_FORMAT)
+    lastDayDateTime = datetime.today() - timedelta(days = time_delta)
 
+    day = lastDayDateTime.strftime(DEFAULT_DAY_FORMAT)
+    key = DAILY_ACTIVE_USERS + day
+    return getValue(key)
 
+def get_previous_week_users():
+    res = []
+    # get current hour
+    for i in range(7):
+        res.insert(0, get_daily_active_users(i))
+    return res
 
+# TODO config
+devices = [
+    "IOS",
+    "Android",
+    "MAC",
+    "Windows",
+    "Pad",
+    "other"
+]
+
+def get_device(device):
+    return getValue(device.lower())

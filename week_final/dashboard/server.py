@@ -81,7 +81,7 @@ def userTrend():
         },
         {
             'name': 'Active User',
-            'data': [74, 110,50, 34, 20, 90,74]
+            'data': operations.get_previous_week_users()
         }
     ]
     response = app.response_class(
@@ -92,27 +92,28 @@ def userTrend():
     return response
 
 # API userDevice
+# Done
 @app.route("/userDevice")
 def userDevice():
     data = [
         {
             'name': 'IOS',
-            'y': 56.33,
+            'y': operations.get_device('IOS'),
         }, {
             'name': 'Android',
-            'y': 24.03,
+            'y': operations.get_device('Android'),
         }, {
             'name': 'MAC',
-            'y': 10.38,
+            'y': operations.get_device('MAC'),
         }, {
             'name': 'Windows',
-            'y': 4.77,
+            'y': operations.get_device('Windows'),
         }, {
             'name': 'Pad',
-            'y': 0.91,
+            'y': operations.get_device('Pad'),
         }, {
             'name': 'other',
-            'y': 2
+            'y': operations.get_device('other')
         }
     ]
     response = app.response_class(
@@ -123,6 +124,7 @@ def userDevice():
     return response
 
 # API newsCategory
+# TODO
 @app.route("/newsCategory")
 def newsCategory():
     data = [
@@ -155,6 +157,7 @@ def newsCategory():
     return response
 
 # API User Active Time Distribution(24 hours)
+# Done
 @app.route("/userActiveTimeDistribution")
 def userActiveTimeDistribution():
     data = [

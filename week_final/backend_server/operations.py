@@ -81,10 +81,21 @@ def getNewsSummariesForUser(user_id, page_num):
     return json.loads(dumps(sliced_news))
 
 
-def logNewsClickForUser(user_id, news_id):
+def logNewsClickForUser(user_id, news_id, user_agent, news_category):
     print '[logNewsClickForUser]\n'
-    # print 'user_id ', user_id
-    # print 'news_id', news_id
+    print 'user_id:', user_id
+    print 'news_id:', news_id
+    print 'user_agent:', user_agent
+    print 'news_category:', news_category
+
+    # signup
+
+    # user_agent
+    update_user_agent(user_agent)
+
+    # news category
+    update_news_category(news_category)
+
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': datetime.utcnow()}
 
     db = mongodb_client.get_db()
@@ -99,14 +110,14 @@ def logNewsClickForUser(user_id, news_id):
     # count clickinng number evey hour
     update_hour_clicking_number()
 
+    # update_daily_active_users
+    update_daily_active_users(user_id)
+
     # update user freq
     update_daily_active_users_freq(user_id)
 
     # update item freq
     update_daily_active_news_freq(news_id)
-
-    # update_daily_active_users
-    update_daily_active_users(user_id)
 
     # Send log task to machine learning service for prediction
     message = {'userId': user_id, 'newsId': news_id, 'timestamp': str(datetime.utcnow())}
@@ -135,7 +146,7 @@ def addOne(key, expire_seconds=DEFAULT_EXPIRE_SECONDS):
         count = int(redis_client.get(key))
     redis_client.set(key, count + 1)
     redis_client.expire(key, expire_seconds)
-    # print 'key: ' + key + '\tval: ' + count + 1
+    print count
 
 def update_hour_clicking_number():
     '''
@@ -163,14 +174,64 @@ def update_daily_active_users(user_id):
     '''
     if user is NOT exist in daily_active_users_freq, add one
     '''
-    print 'update_daily_active_users'
+    print '===============update_daily_active_users============'
     day = datetime.today().strftime(DEFAULT_DAY_FORMAT)
 
-    # daily_active_users_frq 
-    daily_active_users_frq = DAILY_ACTIVE_USERS_FREQ + day + user_id
+    # daily_active_users_freq 
+    daily_active_users_freq = DAILY_ACTIVE_USERS_FREQ + day + user_id
     
     key = DAILY_ACTIVE_USERS + day
 
     # if user_id is not in active 
-    if redis_client.get(daily_active_users_frq) is None:
+    print "daily_active_users_freq:" + daily_active_users_freq  
+    print "key: " + key
+    if redis_client.get(daily_active_users_freq) is None:
+        print "no existed"
         addOne(key)
+
+
+# TODO config
+devices = [
+    "IOS",
+    "Android",
+    "MAC",
+    "Windows",
+    "Pad",
+    "other"
+]
+
+def update_user_agent(user_agent):
+    device = get_user_device(user_agent)
+    print "device:%s", device
+    addOne(device)
+
+def get_user_device(user_agent):   
+    for agent in devices:
+        if agent.lower() in user_agent.lower():
+            return agent
+    return devices[-1]
+
+# TODO config
+classes = [
+    "Colleges & Schools",
+    "Environmental",
+    "World",
+    "Entertainment",
+    "Media",
+    "Politics & Government",
+    "Regional News",
+    "Religion",
+    "Sports",
+    "Technology",
+    "Traffic",
+    "Weather",
+    "Economic & Corp",
+    "Advertisements",
+    "Crime",
+    "Other",
+    "Magazine"
+]
+
+def update_news_category(news_category):
+    print "news_category:%s", news_category
+    addOne(news_category)
