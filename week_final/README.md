@@ -7,8 +7,7 @@
 - [ ] Average Usage Time
 
 ### User Trend
-
-- [] New User 
+- [ ] New User 
 ```json
 { 
     "-6" : 20,
@@ -20,7 +19,7 @@
     "0" : 110
 }
 ```
-- [] Active User
+- [ ] Active User
 ```json
 { 
     "-6" : 74,
@@ -34,10 +33,10 @@
 ```
 
 ### User Device
-- [] {"IOS" : 200, "IPHONE" : 300, "Others" : 100}
+- [ ] {"IOS" : 200, "IPHONE" : 300, "Others" : 100}
 
 ### User News Category
-- [] {"technology" : 50, "music" : 150, "others" : 50}
+- [ ] {"technology" : 50, "music" : 150, "others" : 50}
 
 ### User Active Time distribution (24 hours)
 - [x] {"00" : 20, "01": 30, ... "23" : 40}
