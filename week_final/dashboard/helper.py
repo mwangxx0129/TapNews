@@ -32,8 +32,8 @@ def generate_hour_clicking_number(time_delta, val):
     key = HOUR_CLICKING_NUMBER + hour
 
     print key
-    if redis_client.get(key) is not None:
-        redis_client.set(key, val)
+    # if redis_client.get(key) is None:
+    redis_client.set(key, val)
 
 def generate_daily_active_users(time_delta, val):
     lastDayDateTime = datetime.today() - timedelta(days = time_delta)
@@ -45,8 +45,36 @@ def generate_daily_active_users(time_delta, val):
     if redis_client.get(key) is None:
         redis_client.set(key, val)
 
+def generate_news_category(key, val):
+    if redis_client.get(key) is None:
+        redis_client.set(key, val)
+
 for i in range(7):
     generate_daily_active_users(i, (i * 99) % 1024)
 
-# for i in range(23):
-#     generate_hour_clicking_number(i, (i * 99) % 1024)
+for i in range(23):
+    generate_hour_clicking_number(i, 99 * i % 78)
+
+news_category = [
+    "Colleges & Schools",
+    "Environmental",
+    "World",
+    "Entertainment",
+    "Media",
+    "Politics & Government",
+    "Regional News",
+    "Religion",
+    "Sports",
+    "Technology",
+    "Traffic",
+    "Weather",
+    "Economic & Corp",
+    "Advertisements",
+    "Crime",
+    "Other",
+    "Magazine",
+    "Education"
+]
+
+for i in news_category:
+    generate_news_category(i.lower(), 10)

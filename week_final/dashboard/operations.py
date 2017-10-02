@@ -67,7 +67,7 @@ def get_hour_clicking_number(time_delta=0):
     # get key
     key = HOUR_CLICKING_NUMBER + hour
 
-    return getValue(key)
+    return int(getValue(key))
 
 def get_daily_active_time():
     res = []
@@ -106,7 +106,8 @@ devices = [
 ]
 
 def get_device(device):
-    return getValue(device.lower())
+    # return 20
+    return int(getValue(device.lower()))
 
 def get_news_category(news_category):
-    return getValue(news_category.lower())
+    return int(getValue(news_category.lower()))

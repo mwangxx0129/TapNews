@@ -1,0 +1,9 @@
+.custom_padding{
+    min-width: 310px;
+    height: 400px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+
+}

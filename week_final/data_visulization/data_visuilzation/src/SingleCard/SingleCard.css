@@ -1,0 +1,29 @@
+
+.card{
+    background-color: #53c79f;
+    height: 125px;
+    border-radius: 2px;
+    font-weight: 350;
+}
+
+.custom_padding{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+
+}
+
+.card_header {
+    padding: 10px 10px 5px 10px;
+    color: #ffffff;
+}
+
+.card_body{
+    text-align: center;
+    color:#ffffff;
+    font-size: 4em;
+    font-weight: 500;
+}
+
+.margin-below-20{
+    margin-bottom: 20px;
+}

@@ -45,7 +45,7 @@ def get_hour_clicking_number_param(delta):
 
 # API userStatisticsData
 @app.route("/userStatisticsData")
-def userStatisticsData():
+def user_statistics_data():
     data = [
         {
             'title': 'Total Users',
@@ -95,27 +95,39 @@ def userTrend():
 # Done
 @app.route("/userDevice")
 def userDevice():
+    ios = operations.get_device('IOS')
+    android = operations.get_device('Android')
+    mac = operations.get_device('MAC')
+    windows = operations.get_device('Windows')
+    pad = operations.get_device('Pad')
+    other = operations.get_device('other')
+
+    total = ios + android + mac + windows + pad + other
+    total = total * 1.0
+
     data = [
         {
             'name': 'IOS',
-            'y': operations.get_device('IOS'),
+            'y': ios,
         }, {
             'name': 'Android',
-            'y': operations.get_device('Android'),
+            'y': android,
         }, {
             'name': 'MAC',
-            'y': operations.get_device('MAC'),
+            'y': mac,
         }, {
             'name': 'Windows',
-            'y': operations.get_device('Windows'),
+            'y': windows,
         }, {
             'name': 'Pad',
-            'y': operations.get_device('Pad'),
+            'y': pad,
         }, {
             'name': 'other',
-            'y': operations.get_device('other')
+            'y': other
         }
     ]
+    # remove it 
+    print data
     response = app.response_class(
         response=json.dumps(data),
         status=200,

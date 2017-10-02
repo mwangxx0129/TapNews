@@ -1,0 +1,7 @@
+.bg{
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius:4px;
+    height: 400px;
+    box-shadow: 1px 1px 1px -1px rgba(100,100,100,.5);
+}

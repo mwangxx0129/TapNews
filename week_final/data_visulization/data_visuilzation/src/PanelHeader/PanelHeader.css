@@ -1,0 +1,19 @@
+
+.panel-header
+{
+    height:50px;
+    background-color: #f4f4f4;
+    border-radius: 2px 2px 0 0;
+    border-bottom: 1px solid #dbdbdb;
+    padding:10px 20px 10px 20px;
+}
+
+.panel-title{
+    color:#6e6e74;
+    font-size: 1.5em;
+    font-weight: 300;
+}
+
+.line-height-30{
+    line-height: 30px;
+}
